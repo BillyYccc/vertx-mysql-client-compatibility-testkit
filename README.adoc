@@ -1,0 +1,18 @@
+= Reactive MySQL Client Compatibility TestKit
+
+TestKit used to verify using the https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-mysql-client[Reactive MySQL Client] with different databases which are compatible with MySQL Client/Server Protocol.
+
+== Database Compatibility
+
+|===
+|Database | Supported
+
+|MySQL 5.5 | &#10004;
+|MySQL 5.6 | &#10004;
+|MySQL 5.7 | &#10004;
+|MySQL 8.0 | &#10004;
+|MariaDB 10.1 | &#10004;
+|MariaDB 10.2 | &#10004;
+|MariaDB 10.3 | &#10004;
+|MariaDB 10.4 | &#10004;
+|===

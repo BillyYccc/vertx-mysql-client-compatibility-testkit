@@ -1,0 +1,49 @@
+language: java
+sudo: required
+services:
+  - docker
+branches:
+  only:
+    - master
+cache:
+  directories:
+    - $HOME/.m2
+before_cache:
+  - rm -rf $HOME/.m2/repository/io/vertx/
+before_script:
+  - sudo /etc/init.d/mysql stop
+jobs:
+  include:
+    - stage: test
+      name: "MySQL 5.5"
+      jdk: openjdk8
+      script: ./gradlew test --tests com.billyyccc.mysql.MySQL_5_5_TestKit
+    - stage: test
+      name: "MySQL 5.6"
+      jdk: openjdk8
+      script: ./gradlew test --tests com.billyyccc.mysql.MySQL_5_6_TestKit
+    - stage: test
+      name: "MySQL 5.7"
+      jdk: openjdk8
+      script: ./gradlew test --tests com.billyyccc.mysql.MySQL_5_7_TestKit
+    - stage: test
+      name: "MySQL 8.0"
+      jdk: openjdk8
+      script: ./gradlew test --tests com.billyyccc.mysql.MySQL_8_0_TestKit
+    - stage: test
+      name: "MariaDB 10.1"
+      jdk: openjdk8
+      script: ./gradlew test --tests com.billyyccc.mariadb.MariaDB_10_1_TestKit
+    - stage: test
+      name: "MariaDB 10.2"
+      jdk: openjdk8
+      script: ./gradlew test --tests com.billyyccc.mariadb.MariaDB_10_2_TestKit
+    - stage: test
+      name: "MariaDB 10.3"
+      jdk: openjdk8
+      script: ./gradlew test --tests com.billyyccc.mariadb.MariaDB_10_3_TestKit
+    - stage: test
+      name: "MariaDB 10.4"
+      jdk: openjdk8
+      script: ./gradlew test --tests com.billyyccc.mariadb.MariaDB_10_4_TestKit
+

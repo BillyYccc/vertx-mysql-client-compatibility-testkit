@@ -69,4 +69,15 @@ public abstract class MySQLClientTestKit {
       }));
     }
   }
+
+  @Test
+  @DisplayName("testing version")
+  public void testVersion(VertxTestContext testContext) {
+    pool.query("SELECT VERSION()", testContext.succeeding(result -> {
+      Row row = result.iterator().next();
+      String version = row.getString(0);
+      System.out.println("SELECT VERSION(): " + version);
+      testContext.completeNow();
+    }));
+  }
 }

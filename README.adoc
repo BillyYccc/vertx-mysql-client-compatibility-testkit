@@ -1,9 +1,15 @@
 = Reactive MySQL Client Compatibility TestKit
 
-image::https://img.shields.io/badge/Vert.x-4.0.0--milestone4-blue[link="https://github.com/eclipse/vert.x"]
+image:https://img.shields.io/badge/Vert.x-4.0.0--milestone4-blue[link="https://github.com/eclipse/vert.x"]
 image:https://travis-ci.org/BillyYccc/vertx-mysql-client-compatibility-testkit.svg?branch=master["Build Status", link="https://travis-ci.org/BillyYccc/vertx-mysql-client-compatibility-testkit"]
 
 TestKit used to verify using the https://github.com/eclipse-vertx/vertx-sql-client/tree/master/vertx-mysql-client[Reactive MySQL Client] with different databases which are compatible with MySQL Client/Server Protocol.
+
+== Checked Features
+
+* Connection
+* Text Query
+* Server-side Prepared Statement
 
 == Database Compatibility
 

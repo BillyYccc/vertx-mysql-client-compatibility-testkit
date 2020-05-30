@@ -20,24 +20,26 @@ public abstract class MySQLClientTestKit {
     Checkpoint checkpoint = testContext.checkpoint(1000);
     for (int i = 0; i < 1000; i++) {
       pool.getConnection(testContext.succeeding(conn -> {
-        conn.query("SELECT 123", testContext.succeeding(result1 -> {
-          int result1Size = result1.size();
-          Row result1Row = result1.iterator().next();
-          testContext.verify(() -> {
-            Assertions.assertEquals(1, result1Size);
-            Assertions.assertEquals(123, result1Row.getInteger(0));
-          });
-          conn.query("SELECT 'hello, world!'", testContext.succeeding(result2 -> {
-            int result2Size = result2.size();
-            Row result2Row = result2.iterator().next();
+        conn.query("SELECT 123")
+          .execute(testContext.succeeding(result1 -> {
+            int result1Size = result1.size();
+            Row result1Row = result1.iterator().next();
             testContext.verify(() -> {
-              Assertions.assertEquals(1, result2Size);
-              Assertions.assertEquals("hello, world!", result2Row.getString(0));
+              Assertions.assertEquals(1, result1Size);
+              Assertions.assertEquals(123, result1Row.getInteger(0));
             });
-            conn.close();
-            checkpoint.flag();
+            conn.query("SELECT 'hello, world!'")
+              .execute(testContext.succeeding(result2 -> {
+                int result2Size = result2.size();
+                Row result2Row = result2.iterator().next();
+                testContext.verify(() -> {
+                  Assertions.assertEquals(1, result2Size);
+                  Assertions.assertEquals("hello, world!", result2Row.getString(0));
+                });
+                conn.close();
+                checkpoint.flag();
+              }));
           }));
-        }));
       }));
     }
   }
@@ -48,24 +50,26 @@ public abstract class MySQLClientTestKit {
     Checkpoint checkpoint = testContext.checkpoint(1000);
     for (int i = 0; i < 1000; i++) {
       pool.getConnection(testContext.succeeding(conn -> {
-        conn.preparedQuery("SELECT 123", testContext.succeeding(result1 -> {
-          int result1Size = result1.size();
-          Row result1Row = result1.iterator().next();
-          testContext.verify(() -> {
-            Assertions.assertEquals(1, result1Size);
-            Assertions.assertEquals(123, result1Row.getInteger(0));
-          });
-          conn.preparedQuery("SELECT 'hello, world!'", testContext.succeeding(result2 -> {
-            int result2Size = result2.size();
-            Row result2Row = result2.iterator().next();
+        conn.preparedQuery("SELECT 123")
+          .execute(testContext.succeeding(result1 -> {
+            int result1Size = result1.size();
+            Row result1Row = result1.iterator().next();
             testContext.verify(() -> {
-              Assertions.assertEquals(1, result2Size);
-              Assertions.assertEquals("hello, world!", result2Row.getString(0));
+              Assertions.assertEquals(1, result1Size);
+              Assertions.assertEquals(123, result1Row.getInteger(0));
             });
-            conn.close();
-            checkpoint.flag();
+            conn.preparedQuery("SELECT 'hello, world!'")
+              .execute(testContext.succeeding(result2 -> {
+                int result2Size = result2.size();
+                Row result2Row = result2.iterator().next();
+                testContext.verify(() -> {
+                  Assertions.assertEquals(1, result2Size);
+                  Assertions.assertEquals("hello, world!", result2Row.getString(0));
+                });
+                conn.close();
+                checkpoint.flag();
+              }));
           }));
-        }));
       }));
     }
   }
@@ -73,7 +77,7 @@ public abstract class MySQLClientTestKit {
   @Test
   @DisplayName("testing version")
   public void testVersion(VertxTestContext testContext) {
-    pool.query("SELECT VERSION()", testContext.succeeding(result -> {
+    pool.query("SELECT VERSION()").execute(testContext.succeeding(result -> {
       Row row = result.iterator().next();
       String version = row.getString(0);
       System.out.println("SELECT VERSION(): " + version);

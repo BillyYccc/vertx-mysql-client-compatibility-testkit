@@ -18,7 +18,7 @@ repositories {
     }
 }
 
-val vertxVersion = "4.0.0-milestone4"
+val vertxVersion = "4.0.0-milestone5"
 val testcontainersVersion = "1.12.3"
 
 dependencies {

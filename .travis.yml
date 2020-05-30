@@ -47,6 +47,10 @@ jobs:
       jdk: openjdk8
       script: ./gradlew test --tests com.billyyccc.mariadb.MariaDB_10_4_TestKit
     - stage: test
+      name: "MariaDB 10.5"
+      jdk: openjdk8
+      script: ./gradlew test --tests com.billyyccc.mariadb.MariaDB_10_5_TestKit
+    - stage: test
       name: "Percona 5.5"
       jdk: openjdk8
       script: ./gradlew test --tests com.billyyccc.percona.Percona_5_5_TestKit
